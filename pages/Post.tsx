@@ -1,6 +1,6 @@
 'use client';
+
 import Image from 'next/image';
-import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 export default function Post({ id, name, avatar, postTitle, comments }: any) {
@@ -25,15 +25,14 @@ export default function Post({ id, name, avatar, postTitle, comments }: any) {
         <p className="break-all">{postTitle}</p>
       </div>
       <div className="flex gap-4 cursor-pointer items-center">
-        <Link
-          href={{
-            pathname: `/post/${id}`,
-          }}
+        <link
+          // eslint-disable-next-line react/no-string-refs
+          ref={""}
         >
           <p className=" text-sm font-bold text-gray-700">
             {comments?.length} Comments
           </p>
-        </Link>
+        </link>
       </div>
     </motion.div>
   );

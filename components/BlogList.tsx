@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
-import getPosts  from '../pages/api/posts/getPosts'
+import getPosts from '../pages/api/posts/getPosts'
+import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
 
 async function BlogList() {
   const posts = await getPosts();
@@ -34,7 +35,7 @@ async function BlogList() {
                 </div>
                 <div className="flex flex-col md:flex-row gap-y-2">
                   {post.categories.map((category: { title: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; }) => (
-                    <div className="bg-[#537FE7] text-center text-black px-3 py-1 rounded-full text-sm font-semibold">
+                    <div key={post} className="bg-[#537FE7] text-center text-black px-3 py-1 rounded-full text-sm font-semibold">
                       {/* <p>{category.title}</p> */}
                     </div>
                   ))}
