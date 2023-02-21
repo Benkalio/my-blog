@@ -3,7 +3,6 @@
 import Banner from '@/components /Banner';
 import Header from '@/components /Header';
 import React from 'react';
-import '../styles/globals.css';
 import QueryWrapper from './QueryWrapper';
 
 export default function RootLayout({
