@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { PrismaClient } from '@prisma/client'
-import Banner from '@/components 11-43-56-986/Banner'
-import Header from '@/components 11-43-56-986/Header';
+import Banner from '@/components /Banner'
+import Header from '@/components /Header';
 
 export default function Home() {
   
