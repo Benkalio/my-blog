@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React from 'react';
 import { GetServerSideProps } from "next";
 import { useSession, getSession } from "next-auth/react";
@@ -87,7 +88,11 @@ export const BlogAuthor: React.FC<BlogAuthorProps> = (props) => {
 };
 
 const Drafts: React.FC<Props> = (props) => {
-  const [data: session] = useSession();
+  const { data: session, status } = useSession();
+  const loading = status === "loading";
+  if (loading) {
+    return <div>Loading ...</div>;
+  }
 
   // SETTING COLOR
   const color = useColorModeValue("gray.50", "gray.800");
