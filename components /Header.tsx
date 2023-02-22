@@ -12,7 +12,6 @@ import {
   UnlockIcon,
 } from '@chakra-ui/icons';
 
-
 const Header = () => { 
   const { data: session, status } = useSession();
   const isLoading = status === 'loading';
@@ -84,7 +83,7 @@ const Header = () => {
               >
                 Logout
               </Button>
-              <Avatar src={session.user?.image} size="sm" name="Tennyson Ben-kalio" />
+              <Avatar src={session?.user?.image} size="sm" name="Tennyson Ben-kalio" />
               <IconButton
                 ml={5}
                 aria-label="toggle theme"
