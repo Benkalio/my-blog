@@ -19,12 +19,15 @@ import {
 } from '@chakra-ui/react';
 import Layout from "@/components /Layout";
 
+type SrcProps = {
+  src: string | null | undefined;
+}
 
 const Post = () => {
   const { data: session, status } = useSession();
   const isLoading = status === 'loading';
 
-  const [title, setTitle] = useState();
+  const [title, setTitle] = useState<string>();
   const [content, setContent] = useState<string>();
   const toast = useToast();
 
