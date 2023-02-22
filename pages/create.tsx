@@ -60,7 +60,7 @@ const Post = () => {
             <Stack align={'center'}>
               <Heading fontSize={'4xl'}>Sign in to your account</Heading>
               <Text fontSize={'lg'} color={'gray.600'}>
-                to create posts <ChakraLink color={'blue.400'}></ChakraLink> ✌️
+                to create posts <ChakraLink color={'blue.400'}></ChakraLink> 🫱🏽‍🫲🏾
               </Text>
             </Stack>
           </Stack>
@@ -71,15 +71,15 @@ const Post = () => {
   
   return (
     <Layout>
-      <Stack spacing={8} mx={"auto"}>
+      <Stack spacing={8} mx={'auto'}>
         <form onSubmit={submitData}>
-          <Stack align={"center"}>
-            {/* <Heading fontSize={"4xl"}>Create new post</Heading> */}
-            <Text fontSize={"lg"} color={"gray.600"}>
-              Create a new post 🖊️
-            </Text>
+          <Stack align={'center'}>
+            <Heading fontSize={'4xl'}>Create new post 👨🏾‍💻</Heading>
+            {/* <Text fontSize={'lg'} color={'gray.900'}>
+              Create a new post 👨🏾‍💻
+            </Text> */}
           </Stack>
-          <Box rounded={"lg"} bg={color2} boxShadow={"lg"} p={8}>
+          <Box rounded={'lg'} bg={color2} boxShadow={'lg'} p={8}>
             <Stack spacing={4}>
               <FormControl id="title">
                 <Input
@@ -101,9 +101,9 @@ const Post = () => {
               </FormControl>
               <Stack spacing={10}>
                 <Stack
-                  direction={{ base: "column", sm: "row" }}
-                  align={"start"}
-                  justify={"space-between"}
+                  direction={{ base: 'column', sm: 'row' }}
+                  align={'start'}
+                  justify={'space-between'}
                 ></Stack>
                 <Stack direction="row" spacing={4}>
                   <Button
@@ -114,9 +114,9 @@ const Post = () => {
                     variant="solid"
                     onClick={() =>
                       toast({
-                        title: "Post created.",
+                        title: 'Post created.',
                         description: "We've created your post for you.",
-                        status: "info",
+                        status: 'info',
                         duration: 5000,
                         isClosable: true,
                       })
