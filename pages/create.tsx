@@ -1,8 +1,9 @@
-import { useSession } from "next-auth/react";
-import { useState } from "react";
-import { CheckCircleIcon, CloseIcon } from '@chakra-ui/icons';
-import Link from 'next/link';
-import Router from 'next/router';
+import { useSession } from 'next-auth/react';
+// import { useState } from 'react';
+// import { CheckCircleIcon, CloseIcon } from '@chakra-ui/icons';
+// import Link from 'next/link';
+// import Router from 'next/router';
+import { useForm, Resolver } from 'react-hook-form';
 import {
   Box,
   Button,
@@ -17,42 +18,59 @@ import {
   useColorModeValue,
   useToast,
 } from '@chakra-ui/react';
-import Layout from "@/components /Layout";
+import Layout from '@/components /Layout';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { useMutation } from 'react-query';
+import axios from 'axios';
 
 type SrcProps = {
   src: string | null | undefined;
-}
+};
+
+type FormValues = {
+  title: string;
+  content: string;
+};
+
+const schema = yup
+  .object({
+    title: yup.string().required(),
+    content: yup.string().required(),
+  })
+  .required();
 
 const Post = () => {
   const { data: session, status } = useSession();
   const isLoading = status === 'loading';
 
-  const [title, setTitle] = useState<string>();
-  const [content, setContent] = useState<string>();
-  const toast = useToast();
+  // const [title, setTitle] = useState<string>();
+  // const [content, setContent] = useState<string>();
+  // const toast = useToast();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>({ resolver: yupResolver(schema) });
+
+  const mutation = useMutation({
+    mutationKey: 'create-blog-post',
+    mutationFn: (data: FormValues) => axios.post('/api/post', data),
+    onSuccess: () => console.log('blog created'),
+    onError: (error: any) => console.log(error),
+  });
 
   // SET CHAKRA COLOR
   const color = useColorModeValue('gray.50', 'gray.800');
   const color2 = useColorModeValue('white', 'gray.700');
 
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  const submitData = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    try {
-      const body = { title, content };
-      await fetch(`http://localhost:3000/api/post`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
-      await Router.push('/drafts');
-    } catch (error) {
-      console.log(error);
-    }
+  const submitData = async (data: FormValues) => {
+    mutation.mutate(data);
   };
 
   if (!session) {
@@ -63,7 +81,8 @@ const Post = () => {
             <Stack align={'center'}>
               <Heading fontSize={'4xl'}>Sign in to your account</Heading>
               <Text fontSize={'lg'} color={'gray.600'}>
-                to create posts <ChakraLink color={'blue.400'}></ChakraLink> 🫱🏽‍🫲🏾
+                to create posts <ChakraLink color={'blue.400'}></ChakraLink>{' '}
+                🫱🏽‍🫲🏾
               </Text>
             </Stack>
           </Stack>
@@ -71,79 +90,23 @@ const Post = () => {
       </Layout>
     );
   }
-  
+
   return (
     <Layout>
       <Stack spacing={8} mx={'auto'}>
-        <form onSubmit={submitData}>
-          <Stack align={'center'}>
-            <Heading fontSize={'4xl'}>Create new post 👨🏾‍💻</Heading>
-            {/* <Text fontSize={'lg'} color={'gray.900'}>
-              Create a new post 👨🏾‍💻
-            </Text> */}
-          </Stack>
-          <Box rounded={'lg'} bg={color2} boxShadow={'lg'} p={8}>
-            <Stack spacing={4}>
-              <FormControl id="title">
-                <Input
-                  autoFocus
-                  onChange={(e) => setTitle(e.target.value)}
-                  placeholder="Title"
-                  type="text"
-                  value={title}
-                />
-              </FormControl>
-              <FormControl id="description">
-                <Textarea
-                  cols={50}
-                  onChange={(e) => setContent(e.target.value)}
-                  placeholder="Content"
-                  rows={8}
-                  value={content}
-                />
-              </FormControl>
-              <Stack spacing={10}>
-                <Stack
-                  direction={{ base: 'column', sm: 'row' }}
-                  align={'start'}
-                  justify={'space-between'}
-                ></Stack>
-                <Stack direction="row" spacing={4}>
-                  <Button
-                    disabled={!content || !title}
-                    type="submit"
-                    leftIcon={<CheckCircleIcon />}
-                    colorScheme="linkedin"
-                    variant="solid"
-                    onClick={() =>
-                      toast({
-                        title: 'Post created.',
-                        description: "We've created your post for you.",
-                        status: 'info',
-                        duration: 5000,
-                        isClosable: true,
-                      })
-                    }
-                  >
-                    Create
-                  </Button>
-                  <Link passHref href="/">
-                    <Button
-                      leftIcon={<CloseIcon />}
-                      colorScheme="red"
-                      variant="outline"
-                    >
-                      Cancel
-                    </Button>
-                  </Link>
-                </Stack>
-              </Stack>
-            </Stack>
-          </Box>
+        <form onSubmit={handleSubmit(submitData)}>
+          <input type="text" {...register('title')} id="" placeholder="title" />
+          <div>{errors.title && <span>{errors.title.message}</span>}</div>
+          <br />
+          <textarea {...register('content')} placeholder="content"></textarea>
+          <div>
+            {errors.content ? <span>{errors.content.message}</span> : null}
+          </div>
+          <button>Submit</button>
         </form>
       </Stack>
     </Layout>
   );
-}
+};
 
 export default Post;
