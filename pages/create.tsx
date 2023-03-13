@@ -86,7 +86,7 @@ const Post = () => {
   return (
     <Layout>
       <Stack spacing={8} mx={'auto'}>
-        <FormControl onSubmit={handleSubmit(submitData)}>
+        <FormControl w={'80%'} ml={10} mt={4}>
           <Input type="text" {...register('title')} id="" placeholder="title" />
           <div>{errors.title && <span>{errors.title.message}</span>}</div>
           <br />
@@ -94,7 +94,7 @@ const Post = () => {
           <div>
             {errors.content ? <span>{errors.content.message}</span> : null}
           </div>
-          <Button>Submit</Button>
+          <Button onClick={handleSubmit(submitData)}>Submit</Button>
         </FormControl>
       </Stack>
     </Layout>

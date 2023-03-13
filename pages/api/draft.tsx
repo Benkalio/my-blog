@@ -17,7 +17,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import Router from "next/router";
-import prisma from '@/prisma/client';
+import prisma from "../../prisma/client";
 import Layout from '@/components /Layout';
 
 type Props = {

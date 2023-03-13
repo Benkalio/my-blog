@@ -1,13 +1,13 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
-import prisma from '@/prisma/client';
+import prisma from '../../../prisma/client';
 
 export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   switch (req.method) {
-    case "POST":
+    case 'POST':
       try {
         console.log('request body', req.body);
         const { title, content } = req.body;
@@ -29,13 +29,12 @@ export default async function handle(
         console.log(error);
       }
       break;
-    case "GET":
+    case 'GET':
       try {
-        const blogs = await prisma.post.findMany({})
-        return res.status(200).json(blogs)
-      
+        const blogs = await prisma.post.findMany({});
+        return res.status(200).json(blogs);
       } catch (error) {
-        res.status(400).send(error)
+        res.status(400).send(error);
       }
       break;
     default:
