@@ -24,10 +24,6 @@ import * as yup from 'yup';
 import { useMutation } from 'react-query';
 import axios from 'axios';
 
-type SrcProps = {
-  src: string | null | undefined;
-};
-
 type FormValues = {
   title: string;
   content: string;
@@ -43,10 +39,6 @@ const schema = yup
 const Post = () => {
   const { data: session, status } = useSession();
   const isLoading = status === 'loading';
-
-  // const [title, setTitle] = useState<string>();
-  // const [content, setContent] = useState<string>();
-  // const toast = useToast();
 
   const {
     register,
@@ -94,16 +86,16 @@ const Post = () => {
   return (
     <Layout>
       <Stack spacing={8} mx={'auto'}>
-        <form onSubmit={handleSubmit(submitData)}>
-          <input type="text" {...register('title')} id="" placeholder="title" />
+        <FormControl onSubmit={handleSubmit(submitData)}>
+          <Input type="text" {...register('title')} id="" placeholder="title" />
           <div>{errors.title && <span>{errors.title.message}</span>}</div>
           <br />
-          <textarea {...register('content')} placeholder="content"></textarea>
+          <Textarea {...register('content')} placeholder="content"></Textarea>
           <div>
             {errors.content ? <span>{errors.content.message}</span> : null}
           </div>
-          <button>Submit</button>
-        </form>
+          <Button>Submit</Button>
+        </FormControl>
       </Stack>
     </Layout>
   );

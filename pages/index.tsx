@@ -10,7 +10,7 @@ type Post = {
 }
 
 const BlogHome = () => {
-  const [posts, setPosts] = useState<Post[]>([])
+  // const [posts, setPosts] = useState<Post[]>([])
   const {
     isLoading, isSuccess
   } = useQuery({
